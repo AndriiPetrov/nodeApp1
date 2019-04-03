@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
-const dbURI = 'mongodb://ds115533.mlab.com:15533/films_db';
+//const dbURI = 'mongodb://ds115533.mlab.com:15533/films_db';
+const dbURI = 'mongodb+srv://Bratok3000:p0o9i8u7@cluster0-stcrx.mongodb.net/test?retryWrites=true';
 var dbOptions = {
     user: 'filmapp',
     pass: 'NtqfEw2r',

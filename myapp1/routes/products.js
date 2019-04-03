@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var faker = require('faker');
+var Product = require('./../models/product.model');
 
 var logger = function(req, res, next) {
     console.info(req.params);
@@ -26,7 +27,14 @@ router.get('/:id', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-    res.status(201).send(req.body)
+    var product = new Product(req.body);
+    product.save(function(err) {
+        if(err) {
+            res.status(500).json(err);
+        } else {
+            res.status(201).send(product);
+        }
+    });
 });
 
 router.delete('/:id', logger, function(req, res) {
