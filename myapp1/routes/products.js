@@ -9,20 +9,14 @@ var logger = function(req, res, next) {
 };
 
 router.get('/', function(req, res) {
-    res.status(200).send([{
-        id: faker.random.number(),
-        name: faker.commerce.product(),
-        price: faker.commerce.price(),
-        color: faker.commerce.color()
-    }]);
+    Product.find({}, function(err, products){
+        res.status(200).send(products);
+    });
 });
 
 router.get('/:id', function(req, res) {
-    res.status(200).send({
-        id: req.params.id,
-        name: faker.commerce.product(),
-        price: faker.commerce.price(),
-        color: faker.commerce.color()
+    Product.findOne({_id : req.params.id}, function(err, product) {
+        res.status(200).send(product);
     });
 });
 
@@ -30,7 +24,7 @@ router.post('/', function(req, res) {
     var product = new Product(req.body);
     product.save(function(err) {
         if(err) {
-            res.status(500).json(err);
+            return next(err);
         } else {
             res.status(201).send(product);
         }
@@ -38,13 +32,22 @@ router.post('/', function(req, res) {
 });
 
 router.delete('/:id', logger, function(req, res) {
-    res.status(200).send({
-        id: req.params.id,
-        name: faker.commerce.product(),
-        price: faker.commerce.price(),
-        color: faker.commerce.color(),
-        status: 'inactive'
+    Product.deleteOne({_id : req.params.id}, function(err) {
+        if(err){
+            return next(err);
+        }
+        res.status(204).send();
     });
 });
+
+router.use(function (err, req, res, next) {
+    console.log(err);
+
+    if(req.app.get('env') !== 'development'){
+        delete err.stack;
+    }
+
+    res.status(err.statusCode || 500).json(err);
+})
 
 module.exports = router;

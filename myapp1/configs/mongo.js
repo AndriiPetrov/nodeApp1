@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 //   client.close();
 // });
 
-const dbURI = 'mongodb://Bratok3000:%36p0o9i8u7@cluster0-stcrx.mongodb.net/test?retryWrites=true';
+const dbURI = 'mongodb+srv://Andrii:123@cluster0-stcrx.mongodb.net/test?retryWrites=true';
 // var dbOptions = {
 //     user: 'Andrii',
 //     pass: '$p0o9i8u7',
