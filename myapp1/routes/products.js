@@ -8,30 +8,35 @@ var logger = function(req, res, next) {
     next();
 };
 
-router.get('/', function(req, res) {
+router.get('/', function(req, res, next) {
     Product.find({}, function(err, products){
+        if(err) {
+            return next(err);
+        }
         res.status(200).send(products);
     });
 });
 
-router.get('/:id', function(req, res) {
+router.get('/:id', function(req, res, next) {
     Product.findOne({_id : req.params.id}, function(err, product) {
+        if(err) {
+            return next(err);
+        }
         res.status(200).send(product);
     });
 });
 
-router.post('/', function(req, res) {
+router.post('/', function(req, res, next) {
     var product = new Product(req.body);
     product.save(function(err) {
         if(err) {
             return next(err);
-        } else {
-            res.status(201).send(product);
-        }
+        } 
+        res.status(201).send(product);
     });
 });
 
-router.delete('/:id', logger, function(req, res) {
+router.delete('/:id', logger, function(req, res, next) {
     Product.deleteOne({_id : req.params.id}, function(err) {
         if(err){
             return next(err);

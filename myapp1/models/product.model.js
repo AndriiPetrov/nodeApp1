@@ -27,7 +27,7 @@ productSchema.post('save', function(err, doc, next){
     var path = 'duplicate key';
 
     var validationError = new mongoose.Error.ValidationError();
-    validationError.errors[path] = validatorError.errors[path] || {};
+    validationError.errors[path] = validationError.errors[path] || {};
     validationError.errors[path].message = '{0} is expected to be unique.'.replace('{0}', path);
     validationError.errors[path].reason = err.message;
     validationError.errors[path].name = err.name;
