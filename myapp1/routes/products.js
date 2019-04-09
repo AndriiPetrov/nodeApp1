@@ -1,12 +1,35 @@
 var express = require('express');
 var router = express.Router();
 var faker = require('faker');
+var passport = require('passport');
+
 var Product = require('./../models/product.model');
 
 var logger = function(req, res, next) {
     console.info(req.params);
     next();
 };
+
+router.use(passport.authenticate('jwt', {session: false}));
+
+var profiler = require('./../profiler');
+
+var tracker = function(req, res, next) {
+    var start = process.htrime();
+    req.on('end', function() {
+        console.info(process.hrtime(statt)[1]/1000000);
+    });
+    next();
+};
+
+var profiledGet = profiler.profile(function (req, res) {
+    Product.find({}, function(err, products) {
+        if(err) {
+            return next(err);
+        }
+        res.status(200).send(products);
+    });
+}, 'products get request');
 
 router.get('/', function(req, res, next) {
     Product.find({}, function(err, products){

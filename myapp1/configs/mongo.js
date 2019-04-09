@@ -20,11 +20,11 @@ const dbURI = 'mongodb+srv://Andrii:123@cluster0-stcrx.mongodb.net/test?retryWri
 mongoose.connect(dbURI);
 
 mongoose.connection.on('connected', function() {
-    console.info("Mongoose connected to: " + dbURI); 
+  console.info("Mongoose connected to: " + dbURI);
 });
 
 mongoose.connection.on('error', function() {
-    console.info("Mongoose connected error: " + dbURI); 
+  console.info("Mongoose connected error: " + dbURI);
 });
 
 module.exports = mongoose;
