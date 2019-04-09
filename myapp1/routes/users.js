@@ -29,7 +29,7 @@ router.post('/signin', function(req, res) {
 
     user.comparePassword(req.body.password, function(err, isMatch) {
       if(isMatch && !err) {
-        var token = jwt.sign(user.toObject(), 'secret-word', {expiresIn: 'id'});
+        var token = jwt.sign(user.toObject(), 'secret-word', {expiresIn: '1d'});
         return res.status(200).json({success: true, token: 'JWT' + token});
       }
       res.status(401).send({success: false, msg: 'Authentafication failed. Wrong password.'});
@@ -38,11 +38,11 @@ router.post('/signin', function(req, res) {
 })
 
 
-var router = express.Router();
+// var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// /* GET users listing. */
+// router.get('/', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
 
 module.exports = router;
